@@ -100,9 +100,9 @@ offer:
 		status: description:'The status of the offer'
 		date:	description:'The Date the offer was made'
 	links:
-		url:	'/offer/'			,rel:'instances'
+		url:	'/offer/'		,rel:'instances'
 		url:	'/offer/{id}'		,rel:'self'
-		url:	'/order/?offer={id}',rel:'Orders'
+		url:	'/order/?offer={id}'	,rel:'Orders'
 		url:	'/agent/{agent}'	,rel:'Offerer'
 		url:	'/scrip/{sell}'		,rel:'Selling'
 		url:	'/scrip/{buy}'		,rel:'Buying'
@@ -225,7 +225,6 @@ alert:
 		url:'/alert/'		,rel:'instances'
 		url:'/alert/{id}'	,rel:'self'
 		url:'/agent/{agent}'	,rel:'target'	
-		
 		
 group:
 	name:		'group'
