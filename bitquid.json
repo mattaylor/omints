@@ -1,0 +1,221 @@
+agent:
+	name:'agent',
+	description:'A user entity than can trade or issue assets'
+	properties:
+		id:		description:'Unique Agent Id'
+		name:	description:'Agent User Name'
+		mail:	description:'Email address'
+		fbId:	description:'Facebook Id'
+		desc:	description:'Description'
+		tags:	description:'Tags'
+	links:
+		url:'/agent/'			,rel:'instances',
+		url:'/agent/{id}'		,rel:'self'
+		url:'/asset/?agent={id}	,rel:'Balances'
+		url:'/scrip/?agent={id}	,rel:'Currencies'
+		url:'/offer/?agent={id}	,rel:'Offers'
+		url:'/order/?agent={id}	,rel:'Orders'
+		url:'/trade/?to={id}	,rel:'Receipts'
+		url:'/trade/?from={id}	,rel:'Payments'
+
+scrip:
+	name:		'scrip',	
+	description:'A fungible unit of account'
+	properties:
+		id:		description:'Ticker for this'
+		issued:	description:'Total units issued'
+		claims: description:'Total units redeemed'
+		about:	description:'Description of this Scrip'
+		image:	description:'Image URL for this scrip'
+		promise:description:'Redemption promise'
+		matures:description:'Date this scrip matures'	
+		agent:	description:'Issuing agent Id'
+		spred:	description:'Mean bid/offer spread to determine liquidity'
+	links:
+		url:'/scrip/',			,rel:'instances'
+		url:'/scrip/{id}',		,rel:'self'
+		url:'/offer/?sell={id}'	,rel:'Bid Offers'
+		url:'/offer/?buy={id}'	,rel:'Ask Offers'
+		url:'/issue/?scrip={id}',rel:'Issue History'
+		url:'/issuer/{agent}'	,rel:'Issuing Agent'
+		url:'/claim/?scrip={id}	,rel:'Claim History'
+		url:'/trade/?scrip={id} ,rel:'Transfers of Scrip Units'
+		url:'/scrip/{id}/'		,rel:'Chart Data'
+
+chart:
+	description:	'Computed Market data about a particular currency'
+	properites:
+		date:	description:'The date'
+		quote:		description:'The script currency traded with'
+		base:	description:'The base currency in the pair'
+		bid:	description:'higest bid price'	
+		ask:	description:'lowest ask price'
+		last:	description:'price of last trade'
+		prev:	description:'Last price of previous day'
+		30d:	description:'Volume of trades over last 30 days'
+		avg:	description:'Weighted price average over last 30 days'
+		open:	description:'First trade of the day'
+		vol:	description:'Daily volume
+		high:	description:'The highest nuber of units traded'
+		low:	description:'The lowest number of units traded'
+	links:
+		url:'/chart/{base}:{quote}'			,rel:'instances'
+		url:'/chart/{base}:{quote}/{date}'	,rel:'self'
+
+
+asset:
+	name:		'asset'
+	description:'Balance of Scrip held by an agent'
+	properties:
+		id:		description:'Asset Id ({agent:scrip}
+		scrip:	description:'Scrip Id'
+		total:	description:'Total Balance of units held (issues + payments - reciepts - claims)'
+		avail:	description:'Balance of units available (total - reserved)' 
+		agent:	description:'Agent Id'
+	links:
+		url:'/asset/'							,rel:'instances'
+		url:'/asset/{id}'						,rel:'self'
+		url:'/agent/{agent}						,rel:'holder'
+		url:'/scrip/{scrip}						,rel:'Scrip'
+		url:'/trade/?scrip={scrip}&from={agent}	,rel:'Payments'
+		url:'/trade/?scrip={scrip}&to={agent}	,rel:'Reciepts'
+		url:'/issue/?scrip={scrip}&agent={agent},rel:'Issues'
+		url:'/claim/?scrip={scrip}&agent={agent},rel:'Claims'
+		
+offer:
+	name:		'offer'
+	description:'Offer for a scrip pair'
+	properites:
+		id  :	description:'Offer Id'
+		buy :	description:'The Scrip that is being bought'
+		sell: 	description:'The Scrip that is being sold'
+		rate:	description:'The rate of exchange'
+		min:	description:'minimum units to sell'
+		max:	description:'maximum units to sell'
+		agent:	description:'The Agent Id making this offer'
+		expires:description:'The Expiry time of this offer'
+		status: description:'The status of the offer'
+		date:	description:'The Date the offer was made'
+	links:
+		url:'/offer/'			,rel:'instances'
+		url:'/offer/{id}'		,rel:'self'
+		url:'/order/?offer={id}',rel:'Orders'
+		url:'/agent/{agent}'	,rel:'Offerer'
+		url:'/scrip/{sell}'		,rel:'Selling'
+		url:'/scrip/{buy}'		,rel:'Buying'
+
+order:
+	name:		'order'
+	description:'A request to buy or sell scrip'
+	properties:
+		id:		description:'Order ID'
+		offer:	description:'Offer ID'
+		agent:	description:'Agent making this order'
+		limit:	description:'Price to buy or sell at'
+		type:	description:'Reserve,Limit,Market,Stop'
+		expires:description:'Expiraton time for the order'	
+		status: description:'OPEN,PARTIAL,CLOSED,CANCELED'	
+		amount:	description:'Quantitiy of Units Ordered'	
+	links:
+		url:'/order/'		,rel:'instances'
+		url:'/order/{id}'	,rel:'self'
+		url:'/offer/{offer}',rel:'offer'
+		url:'/agent/{agent}',rel:'Orderer'		
+
+trade:
+	name:		'trade'
+	description:'Asset transfer transactions'
+	properties:
+		id:		description:'Trade Id'
+		from:	description:'Agent Id transfered from'
+		to:		description:'Agent Id transfered to'
+		scrip:	description:'Scrip being transfered'
+		order:	description:'Order Id'
+		amount:	description:'Quantity of Scrip units being transfered'
+		date:	description:'date of transfer'
+		memo:	description:'Memo (for open transact compatability)'
+	links:
+		url:'/trade/'				,rel:'instances'
+		url:'/trade/{id}'			,rel:'self'
+		url:'/asset/{from}:{scrip}'	,rel:'Asset Source'
+		url:'/asset/{to}:{scrip}'	,rel:'Asset Target'
+
+claim:
+	name:		'claim'
+	description:'Redemption claims'
+	properties:
+		id:		description:'Claim Id'
+		scrip:	description:'Scrip being redeemed'
+		amount:	description:'Quantity being redeemed'
+		date:	description:'redmeption claim date'
+		status:	description:'redemption status (open, closed, canceled)'
+		update:	description:'date of last status update'
+		memo:	description:'memo about this 
+	links:
+		url:'/claim/'		,rel:'instances'
+		url:'/claim/{id}'	,rel:'self'
+		url:'/agent/{agent} ,rel:'issuer'
+		url:'/scrip/{scrip} ,rel:'scrip'
+		url:'/asset/{agent}:{scrip}, rel:'target'
+	
+issue:
+	name:		'issue'
+	description:'Scrip Issue'
+	properties:
+		id:		description:'issue id'
+		scrip:	description:'scrip issued'
+		agent:	description:'issuing agent'
+		amount:	description:'amount issued'
+		date:	description:'issue date'
+	links:
+		url:'/issue/'		,rel:'instances'
+		url:'/issue/{id}'	,rel:'self'
+		url:'/agent/{agent} ,rel:'issuer'
+		url:'/scrip/{scrip} ,rel:'scrip'
+		url:'/asset/{agent}:{scrip}, rel:'target'
+	
+board:
+	name:		'Public notices'
+	description:
+	properties:
+		id:		description:'board post id'
+		title:	description:'The title of the post'
+		body:	description:'The body of the post'
+		from:	description:'agent id of the author'
+		parent:	description:'The board post this 
+		refURI:	description:'A resource this post discusses'
+		likes: 	description:'Likes for this post'
+	links:
+		url:'/board/'				,rel:'instances'
+		url:'/board/{id}'			,rel:'self'
+		url:'/board/{parent}'		,rel:'parent'
+		url:'{refURI},				,rel:'about'
+		url:'/watch/?board={board}'	,rel:'watchers'
+
+watch:
+	name:		'watch'		
+	description:'Watch list for board posts'
+	properties:
+		id:		description:'watch id'
+		agent:	description:'Agent id'
+		board:	description:'Board Id'
+	links:
+		url:'/watch/'			,rel:'instances'
+		url:'/watch/'			,rel:'self'
+		url:'/agent/{agent}'	,rel:'agent'
+		url:'/board/{board}'	,rel:'thread watched'
+	
+alert:
+	name:		'alert'
+	description:'urgent alerts' 
+	properties:
+		id:		description:'Alert Id'
+		agent:	description:'target of the alert'
+		read:	description:'Date read'
+		text:	description:'alert text'
+		date:	description:'alert date'
+		refUrl:	description:'trackable link'	
+	links:
+		url:'/alert/'		,rel:'instances'
+		url:'/alert/{id}'	,rel:'self'
+		url:'/agent/{agent}',rel:'target'	
