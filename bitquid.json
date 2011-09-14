@@ -37,7 +37,7 @@ scrip:
 		url:	'/offer/?sell={id}'	,rel:'Bid Offers'
 		url:	'/offer/?buy={id}'	,rel:'Ask Offers'
 		url:	'/issue/?scrip={id}'	,rel:'Issue History'
-		url:	'/issuer/{agent}'	,rel:'Issuing Agent'
+		url:	'/agent/{agent}'	,rel:'Issuing Agent'
 		url:	'/claim/?scrip={id}'	,rel:'Claim History'
 		url:	'/trade/?scrip={id}'	,rel:'Transfers of Scrip Units'
 		url:	'/chart/?base={id}'	,rel:'Chart Data'
