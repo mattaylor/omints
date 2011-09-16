@@ -91,14 +91,20 @@ offer:
 	properites:
 		id  :	description:'Offer Id'
 		buy :	description:'The Scrip that is being bought'
-		sell: 	description:'The Scrip that is being sold'
+		sell: 	description:'The Scrip that is being sold (optional)'
 		rate:	description:'The rate of exchange'
 		min:	description:'minimum units to sell'
 		max:	description:'maximum units to sell'
+		title:	description:'The title of this offer'
+		type:	description:'REDEEM|EXCHANGE|etc..'
+		about:	description:'The description of this offer'
+		terms:	description:'Additonal terms and conditions for this offer'
+		more:	description:'URL for more information about this offer'
 		agent:	description:'The Agent Id making this offer'
-		expires:description:'The Expiry time of this offer'
+		start:	description:'The Start date Expiry time of this offer'
+		expire:	description:'The expiration date for this offer'
 		status: description:'The status of the offer'
-		date:	description:'The Date the offer was made'
+		date:	description:'The Date the offer was posted made'
 	links:
 		url:	'/offer/'		,rel:'instances'
 		url:	'/offer/{id}'		,rel:'self'
@@ -115,9 +121,9 @@ order:
 		offer:	description:'Offer ID'
 		agent:	description:'Agent making this order'
 		limit:	description:'Price to buy or sell at'
-		type:	description:'Reserve,Limit,Market,Stop'
+		type:	description:'Reserve,Limit,Market,Stop - do we actually need this?'
 		expires:description:'Expiraton time for the order'	
-		status: description:'OPEN,PARTIAL,CLOSED,CANCELED'	
+		status: description:'OPEN,RESERVED,PARTIAL,CLOSED,CANCELED'	
 		amount:	description:'Quantitiy of Units Ordered'	
 	links:
 		url:	'/order/'	,rel:'instances'
@@ -143,6 +149,8 @@ trade:
 		url:	'/asset/{from}:{scrip}'	,rel:'Asset Source'
 		url:	'/asset/{to}:{scrip}'	,rel:'Asset Target'
 
+
+/* maybe we don't need this - a claim is simple an order for a service or product */
 claim:
 	name:		'claim'
 	description:	'Redemption claims'
@@ -161,6 +169,7 @@ claim:
 		url:	'/scrip/{scrip}' 	,rel:'scrip'
 		url:	'/asset/{agent}:{scrip}',rel:'target'
 	
+/* maybe we don't need this - a issue is simple a trade from the issuer to the issuer */
 issue:
 	name:		'issue'
 	description:	'Scrip Issue'
