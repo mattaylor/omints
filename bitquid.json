@@ -85,6 +85,29 @@ asset:
 		url:	'/issue/?scrip={scrip}&agent={agent}'	,rel:'Issues'
 		url:	'/claim/?scrip={scrip}&agent={agent}'	,rel:'Claims'
 		
+
+		
+offer: 
+	name:		'offer'
+	description:	'Offer for a scrip pair'
+	properites:
+		id  :	description:'Offer Id'
+		scrip:	description:'The Scrip that is being bought'
+		quote: 	description:'The Scrip that is being sold (optional)'
+		type:   description:'BID|ASK|REDEEM|EARN'
+		rate:	description:'The rate of exchange'
+		min:	description:'minimum units to sell'
+		max:	description:'maximum units to sell'
+		title:	description:'The title of this offer'
+		about:	description:'The description of this offer'
+		terms:	description:'Additonal terms and conditions for this offer'
+		more:	description:'URL for more information about this offer'
+		agent:	description:'The Agent Id making this offer'
+		start:	description:'The Start date Expiry time of this offer'
+		expire:	description:'The expiration date for this offer'
+		status: description:'The status of the offer'
+		date:	description:'The Date the offer was posted made'
+/*
 offer:
 	name:		'offer'
 	description:	'Offer for a scrip pair'
@@ -105,6 +128,7 @@ offer:
 		expire:	description:'The expiration date for this offer'
 		status: description:'The status of the offer'
 		date:	description:'The Date the offer was posted made'
+*/
 	links:
 		url:	'/offer/'		,rel:'instances'
 		url:	'/offer/{id}'		,rel:'self'
