@@ -9,14 +9,14 @@ agent:
 		desc:	description:'Description'
 		tags:	description:'Tags'
 	links:
-		url:	'/agent/'		,rel:'instances',
-		url:	'/agent/{id}'		,rel:'self'
-		url:	'/asset/?agent={id}'	,rel:'Balances'
-		url:	'/scrip/?agent={id}'	,rel:'Currencies'
-		url:	'/offer/?agent={id}'	,rel:'Offers'
-		url:	'/order/?agent={id}'	,rel:'Orders'
-		url:	'/trade/?to={id}'	,rel:'Receipts'
-		url:	'/trade/?from={id}'	,rel:'Payments'
+		url:	'/agent/'				,rel:'instances',
+		url:	'/agent/{id}'				,rel:'self'
+		url:	'/asset/?agent=/agent/{id}'		,rel:'Balances'
+		url:	'/scrip/?agent=/agent/{id}'		,rel:'Currencies'
+		url:	'/offer/?agent=/agent/{id}'		,rel:'Offers'
+		url:	'/order/?agent=/agent/{id}'		,rel:'Orders'
+		url:	'/trade/?to=/agent/{id}'		,rel:'Receipts'
+		url:	'/trade/?from=/agent/{id}'		,rel:'Payments'
 
 scrip:
 	name:		'scrip',	
@@ -31,16 +31,17 @@ scrip:
 		matures:description:'Date this scrip matures'	
 		agent:	description:'Issuing agent Id'
 		spred:	description:'Mean bid/offer spread to determine liquidity'
+		score:	description:'Total claims settled in last 30 days'
 	links:
-		url:	'/scrip/'		,rel:'instances'
-		url:	'/scrip/{id}'		,rel:'self'
-		url:	'/offer/?sell={id}'	,rel:'Bid Offers'
-		url:	'/offer/?buy={id}'	,rel:'Ask Offers'
-		url:	'/issue/?scrip={id}'	,rel:'Issue History'
-		url:	'/agent/{agent}'	,rel:'Issuing Agent'
-		url:	'/claim/?scrip={id}'	,rel:'Claim History'
-		url:	'/trade/?scrip={id}'	,rel:'Transfers of Scrip Units'
-		url:	'/chart/?base={id}'	,rel:'Chart Data'
+		url:	'/scrip/'				,rel:'instances'
+		url:	'/scrip/{id}'				,rel:'self'
+		url:	'/offer/?scrip=/scrip/{id}&type=bid'	,rel:'Bid Offers'
+		url:	'/offer/?scrip=/scrip/{id}&type=ask'	,rel:'Ask Offers'
+		url:	'/offer/?scrip=/scrip/{id}&type=red'	,rel:'Redemption Offers'
+		url:	'/offer/?scrip=/scrip/{id}&type='	,rel:'Issue Offers'
+		url:	'/claim/?scrip={id}'			,rel:'Claim History'
+		url:	'/trade/?scrip=/scrip/{id}'		,rel:'Transfers of Scrip Units'
+		url:	'/chart/?scrip={id}'			,rel:'Chart Data'
 
 chart:
 	name:		'chart'
@@ -48,7 +49,7 @@ chart:
 	properites:
 		date:	description:'The date'
 		quote:	description:'The script currency traded with'
-		base:	description:'The base currency in the pair'
+		scrip:	description:'The base currency in the pair'
 		bid:	description:'higest bid price'	
 		ask:	description:'lowest ask price'
 		last:	description:'price of last trade'
@@ -60,9 +61,9 @@ chart:
 		high:	description:'The highest nuber of units traded'
 		low:	description:'The lowest number of units traded'
 	links:
-		url:	'/chart/{base}:{quote}'		,rel:'instances'
-		url:	'/chart/{base}:{quote}/{date}'	,rel:'self'
-		url:	'/scrip/{base}'			,rel:'Base currency'
+		url:	'/chart/{scrip}-{quote}'	,rel:'instances'
+		url:	'/chart/{scrip}-{quote}/{date}'	,rel:'self'
+		url:	'/scrip/{scrip}'		,rel:'Base currency'
 		url:	'/scrip/{quote}'		,rel:'Quote currency'
 
 
